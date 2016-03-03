@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>gentoo | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在年前入手了Raspberry２之前安装了archlinux总的来说没啥不好的，搭建十分容易特别的archlinux对wifi的支持不错，树莓派安装wifi，dlna vsftp搭建都什么容易，但是有点稍微不好的就是python版本太高了，虽然现在是说python 支持3.0了，可是很多人依然是用python2.7的。主要还是熟悉。  　　     后来就换成gentoo了，因为自己一直使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gentoo">
+<meta property="og:url" content="http://yoursite.com/2016/02/22/gentoo/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在年前入手了Raspberry２之前安装了archlinux总的来说没啥不好的，搭建十分容易特别的archlinux对wifi的支持不错，树莓派安装wifi，dlna vsftp搭建都什么容易，但是有点稍微不好的就是python版本太高了，虽然现在是说python 支持3.0了，可是很多人依然是用python2.7的。主要还是熟悉。  　　     后来就换成gentoo了，因为自己一直使用">
+<meta property="og:updated_time" content="2016-03-03T13:03:34.639Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="gentoo">
+<meta name="twitter:description" content="在年前入手了Raspberry２之前安装了archlinux总的来说没啥不好的，搭建十分容易特别的archlinux对wifi的支持不错，树莓派安装wifi，dlna vsftp搭建都什么容易，但是有点稍微不好的就是python版本太高了，虽然现在是说python 支持3.0了，可是很多人依然是用python2.7的。主要还是熟悉。  　　     后来就换成gentoo了，因为自己一直使用">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="[layout]-gentoo" class="article article-type-[layout]" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/22/gentoo/" class="article-date">
+  <time datetime="2016-02-22T13:22:38.000Z" itemprop="datePublished">2016-02-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/gentoo/">gentoo</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      gentoo
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> 　　在年前入手了<strong>Raspberry２</strong>之前安装了archlinux总的来说没啥不好的，搭建十分容易特别的archlinux<br>对wifi的支持不错，树莓派安装wifi，dlna vsftp搭建都什么容易，但是有点稍微不好的就是python版本太高了，<br>虽然现在是说python 支持3.0了，可是很多人依然是用python2.7的。主要还是熟悉。  　　<br>     后来就换成gentoo了，因为自己一直使用的都是gentoo当我看到有gentoo时立马打算换gentoo arm版本了，<br>不过由于不熟悉arm版本的问题也想了很久，主要的原因是一般gentoo都是使用iso 加载进入内存安装，而树莓派的iso<br>基本。。。没有。后来还是用arm archlinux安装到一个u盘基于archlinux chroot安装的，不过后来看到了，想到这个<br>其实算是个笨方法。因为其实也更加简单的方法主要gentoo 官方wiki也有误导，说到这里吐槽下gentoo树莓派的文档散乱<br>不严谨，比如ditccd 安装需要在编译主机安装crossdev,但是crossdev需要设置Local_overlay，但是gentoo 《Raspberry<br>Pi/Cross building》中并没提到。  　　<br>     安装过程基本上参照<a href="https://wiki.gentoo.org/wiki/Raspberry_Pi/Quick_Install_Guide" target="_blank" rel="external">Raspberry Pi/Quick Install Guide</a>这里的安装过程基本没啥问题，其中有几点要注意的：  　<br> +我是用u盘安装的<br> u盘分区各种和硬盘基本差不多，需要注意的是启动必须使用sd卡我有张古老的4G<br>sd卡所以我直接就用sd卡作为boot分区分区格式化直接用fdisk 格式化 mkfs.vfat -F 16 /dev/mmcblk0p1<br>引导需要将/boot/cmdline.txt 中添加     dwc_otg.lpm_enable=0 console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1<br><strong>root=/dev/sda1</strong> rootfstype=ext4 elevator=deadline rootwait  加粗部分改为你自己的<br> +net.eth0 sshd     由于树莓派启动没用另外加keyboard 以及显示器所以你可以选择archlinux chroot或者这里有更简单的方法<br>ln -s /mnt/gentoo/etc/init.d/sshd      　/mnt/gentoo/etc/runlevel/default/sshd<br>cp /mnt/gentoo/etc/init.d/net.lo 　/mnt/gentoo/etc/init.d/net.eth0　<br>ln -s /mnt/gentoo/etc/init.d/net.eth0　　 /mnt/gentoo/etc/runlevel/boot/net.eth0<br> +use里添加 -video_cards_omapfb 否则编译xorg-server会出很多莫名其貌的问题。<br> +差点忘了Raspberry 2需要选择stage3-armv7a_hardfp官方wiki也更改到这个了。      　　<br>安装基本上按照wiki就可以了当然你可以安装distcc ccache加速编译各种，但是前提也是搭建好基本环境。       　　 </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/02/22/gentoo/" data-id="cilcaatcj000027iuf50uf6fo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gentoo-pi/">gentoo pi</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/03/03/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/gentoo/">gentoo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/gentoo-pi/">gentoo pi</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/gentoo-pi/" style="font-size: 10px;">gentoo pi</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/03/03/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2016/02/22/gentoo/">gentoo</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
