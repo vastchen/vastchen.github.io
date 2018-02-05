@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.3" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="raspberry ,ssh,免密码," />
+
+
+<meta name="description" content="1.用户输入　　ssh-keygen -t rsa　　Enter file in which to save the key (/root/.ssh/id_rsa): #直接回车　　Created directory &amp;#39;/root/.ssh&amp;#39;. 这里显示的是root的效果　　Enter passphrase (empty for no passphrase):#输入密码短语一般留空">
+<meta name="keywords" content="raspberry ,ssh,免密码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="raspberry pi免密码登陆">
+<meta property="og:url" content="http://yoursite.com/2016/05/09/raspberry-pi-面密码登陆/index.html">
+<meta property="og:site_name" content="起风了">
+<meta property="og:description" content="1.用户输入　　ssh-keygen -t rsa　　Enter file in which to save the key (/root/.ssh/id_rsa): #直接回车　　Created directory &amp;#39;/root/.ssh&amp;#39;. 这里显示的是root的效果　　Enter passphrase (empty for no passphrase):#输入密码短语一般留空">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2016/05/09/raspberry-pi-面密码登陆/keygen_1.png">
+<meta property="og:image" content="http://yoursite.com/2016/05/09/raspberry-pi-面密码登陆/keygen_2.png">
+<meta property="og:image" content="http://yoursite.com/2016/05/09/raspberry-pi-面密码登陆/k3.png">
+<meta property="og:updated_time" content="2018-02-05T14:56:56.436Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="raspberry pi免密码登陆">
+<meta name="twitter:description" content="1.用户输入　　ssh-keygen -t rsa　　Enter file in which to save the key (/root/.ssh/id_rsa): #直接回车　　Created directory &amp;#39;/root/.ssh&amp;#39;. 这里显示的是root的效果　　Enter passphrase (empty for no passphrase):#输入密码短语一般留空">
+<meta name="twitter:image" content="http://yoursite.com/2016/05/09/raspberry-pi-面密码登陆/keygen_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/05/09/raspberry-pi-面密码登陆/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>raspberry pi免密码登陆 | 起风了</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">起风了</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">个人博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/09/raspberry-pi-面密码登陆/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="vastchen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="起风了">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">raspberry pi免密码登陆</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-09T00:00:00+08:00">2016-05-09</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-用户输入"><a href="#1-用户输入" class="headerlink" title="1.用户输入"></a>1.用户输入</h3><p>　　<code>ssh-keygen -t rsa</code><br>　　<code>Enter file in which to save the key (/root/.ssh/id_rsa):</code> #直接回车<br>　　<code>Created directory &#39;/root/.ssh&#39;.</code> 这里显示的是root的效果<br>　　<code>Enter passphrase (empty for no passphrase):</code>#输入密码短语一般留空直接回车<br>　　<code>Enter same passphrase again:</code>重复密码短语<br>　　在/root/.ssh/目录下生成了2个文件，id_rsa为私钥，id_rsa.pub为公钥。公钥就像们的锁头，私钥就像我们的密码，所以钥匙要保存好，钥匙是用来开门的。</p>
+<h3 id="2-导入公钥"><a href="#2-导入公钥" class="headerlink" title="2.导入公钥"></a>2.导入公钥</h3><p>　　<code>cat /root/.ssh/id_rsa.pub &gt;&gt;  /root/.ssh/authorized_keys</code></p>
+<h3 id="3-更改ssh配置文件"><a href="#3-更改ssh配置文件" class="headerlink" title="3.更改ssh配置文件"></a>3.更改ssh配置文件</h3><p>　　<code>nano /etc/ssh/sshd_config</code><br>　　<code>#RSAAuthentication yes</code><br>　　<code>#PubkeyAuthentication yes</code><br>　　<code>#AuthorizedKeysFile .ssh/authorized_keys</code></p>
+<h3 id="4-重启ssh服务。"><a href="#4-重启ssh服务。" class="headerlink" title="4.重启ssh服务。"></a>4.重启ssh服务。</h3><h3 id="5-制作用于putty的私钥"><a href="#5-制作用于putty的私钥" class="headerlink" title="5.制作用于putty的私钥"></a>5.制作用于putty的私钥</h3><p>　　将/root/.ssh/id_rsa下载到本地，利用PUTTYGEN.EXE转换为putty用的ppk文件。<br>　　<img src="/2016/05/09/raspberry-pi-面密码登陆/keygen_1.png" alt="enter description here" title="keygen_1.png"><br>　　点击File，Load private key，导入/root/.ssh/id_rsa文件。成功后的图片如下所示：<br>　　<img src="/2016/05/09/raspberry-pi-面密码登陆/keygen_2.png" alt="enter description here" title="keygen_2.png"><br>　　<br>　　 点击Save private  key按钮，生成一个后缀为ppk的文件，比如起名为teddysun.ppk，这个文件就是已经制作好的用于putty无密码登录的私钥了，妥善保存。</p>
+<h3 id="6-登录选择ppk路径"><a href="#6-登录选择ppk路径" class="headerlink" title="6.登录选择ppk路径"></a>6.登录选择ppk路径</h3><p><img src="/2016/05/09/raspberry-pi-面密码登陆/k3.png" alt="enter description here" title="k3.png"><br>　　  于Auth处选择ppk秘钥  </p>
+<h3 id="7-关闭密码登录-lt-于私人的话可选-因为你丢失秘钥的可能性很大咧-gt"><a href="#7-关闭密码登录-lt-于私人的话可选-因为你丢失秘钥的可能性很大咧-gt" class="headerlink" title="7.关闭密码登录&lt;于私人的话可选:因为你丢失秘钥的可能性很大咧&gt;"></a>7.关闭密码登录&lt;于私人的话可选:因为你丢失秘钥的可能性很大咧&gt;</h3><p>　　<code>nano /etc/ssh/sshd_config</code><br>　　<code>PasswordAuthentication yes</code> 改为<br>　　<code>PasswordAuthentication no</code>重启ssh服务。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/raspberry-ssh-免密码/" rel="tag"># raspberry ,ssh,免密码</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/09/树莓派上搭建dokuwiki/" rel="next" title="树莓派上搭建dokuwiki">
+                <i class="fa fa-chevron-left"></i> 树莓派上搭建dokuwiki
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/06/gentoo systemctl 设置静态ip/" rel="prev" title="gentoo systemd 静态ip设置">
+                gentoo systemd 静态ip设置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">vastchen</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-用户输入"><span class="nav-number">1.</span> <span class="nav-text">1.用户输入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-导入公钥"><span class="nav-number">2.</span> <span class="nav-text">2.导入公钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-更改ssh配置文件"><span class="nav-number">3.</span> <span class="nav-text">3.更改ssh配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-重启ssh服务。"><span class="nav-number">4.</span> <span class="nav-text">4.重启ssh服务。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-制作用于putty的私钥"><span class="nav-number">5.</span> <span class="nav-text">5.制作用于putty的私钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-登录选择ppk路径"><span class="nav-number">6.</span> <span class="nav-text">6.登录选择ppk路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-关闭密码登录-lt-于私人的话可选-因为你丢失秘钥的可能性很大咧-gt"><span class="nav-number">7.</span> <span class="nav-text">7.关闭密码登录&lt;于私人的话可选:因为你丢失秘钥的可能性很大咧&gt;</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">vastchen</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.3"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

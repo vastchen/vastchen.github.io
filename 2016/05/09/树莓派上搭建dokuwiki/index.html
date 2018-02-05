@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.3" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="raspberry,dokuwiki," />
+
+
+<meta name="description" content="安装前配置　　1.nano  /etc/portage/package.accept_keywords　　=www-apps/dokuwiki-20150810a **　　=www-servers/nginx-1.9.13 ~arm　　2.nano /etc/portage/make.conf　　USE=&amp;quot;php&amp;quot;　　NGINX_MODULES_HTTP=&amp;quot;acces">
+<meta name="keywords" content="raspberry,dokuwiki">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树莓派上搭建dokuwiki">
+<meta property="og:url" content="http://yoursite.com/2016/05/09/树莓派上搭建dokuwiki/index.html">
+<meta property="og:site_name" content="起风了">
+<meta property="og:description" content="安装前配置　　1.nano  /etc/portage/package.accept_keywords　　=www-apps/dokuwiki-20150810a **　　=www-servers/nginx-1.9.13 ~arm　　2.nano /etc/portage/make.conf　　USE=&amp;quot;php&amp;quot;　　NGINX_MODULES_HTTP=&amp;quot;acces">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-05T14:56:56.436Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="树莓派上搭建dokuwiki">
+<meta name="twitter:description" content="安装前配置　　1.nano  /etc/portage/package.accept_keywords　　=www-apps/dokuwiki-20150810a **　　=www-servers/nginx-1.9.13 ~arm　　2.nano /etc/portage/make.conf　　USE=&amp;quot;php&amp;quot;　　NGINX_MODULES_HTTP=&amp;quot;acces">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/05/09/树莓派上搭建dokuwiki/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>树莓派上搭建dokuwiki | 起风了</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">起风了</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">个人博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/09/树莓派上搭建dokuwiki/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="vastchen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="起风了">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">树莓派上搭建dokuwiki</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-09T00:00:00+08:00">2016-05-09</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="安装前配置"><a href="#安装前配置" class="headerlink" title="安装前配置"></a>安装前配置</h3><p>　　1.nano  /etc/portage/package.accept_keywords<br>　　<code>=www-apps/dokuwiki-20150810a **</code><br>　　<code>=www-servers/nginx-1.9.13 ~arm</code><br>　　2.nano /etc/portage/make.conf<br>　　<code>USE=&quot;php&quot;</code><br>　　<code>NGINX_MODULES_HTTP=&quot;access browser charset empty_gif fastcgi gzip limit_conn limit_req map proxy realip referer scgi split_clients secure_link spdy ssi ssl upstream_hash upstream_ip_hash upstream_keepalive upstream_least_conn userid uwsgi&quot;</code><br>　　<code>PHP_TARGETS=&quot;php5-6&quot;</code><br>　　<code>PHP_INI_VERSION=&quot;production&quot;</code><br>　　3.nano  /etc/portage/package.use<br>　　<code>www-servers/nginx NGINX_MODULES_HTTP: fastcgi</code><br>　　<code>www-apps/dokuwiki  vhosts</code><br>　　<code>dev-lang/php  frm nginx  xmlreader xmlwriter  berkdb bzip2 cgi cli crypt ctype curl force-cgi-redirect gdbm hash iconv intl ldap mysql ncurses nls pcre pic readline  reflection session spl ssl zlib exif gd imap json pdo sockets soap suhosin wddx xml xmlrpc zip unicode</code><br>　　<code>&gt;=app-eselect/eselect-php-0.9.1  fmp</code></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>　　<code>USE=&quot;frm&quot; emerge -v php</code> 这里必须使用frm因为需要php-frm启动.<br>　　<code>emerge -v ngxin</code><br>　　<code>emerge -v www-apps/dokuwiki</code><br>　　`emerge -v webapp-config’</p>
+<h3 id="安装后配置"><a href="#安装后配置" class="headerlink" title="安装后配置"></a>安装后配置</h3><h4 id="nginx-配置"><a href="#nginx-配置" class="headerlink" title="nginx 配置"></a>nginx 配置</h4><p>　　<code>nano /etc/vhosts/webapp-config</code><br>　　找到<code>#vhost_server=&quot;nginx&quot;</code> 去掉#</p>
+<h5 id="安装dokuwiki"><a href="#安装dokuwiki" class="headerlink" title="安装dokuwiki"></a><strong>安装dokuwiki</strong></h5><p>　　<code>webapp-config -I  dokuwiki 20150810a</code></p>
+<p>　　<code>nano /etc/nginx/nginx.conf</code><br>　　<code>index doku.php,index.html;</code></p>
+<pre><code>server {   只是server部分，前面参看gentoo wiki.
+        listen 192.168.88.108;
+        server_name localhost;
+
+        access_log /var/log/nginx/localhost.access_log main;
+        error_log /var/log/nginx/localhost.error_log info;
+
+        root /var/www/localhost/htdocs/dokuwiki;
+         location ~ \.php$ {
+         try_files $uri =404;
+               include /etc/nginx/fastcgi.conf;
+               fastcgi_pass unix:/run/php-fpm.socket;
+          }
+
+         location ~ /(data|conf|bin|inc)/ {  #保护数据安全
+                                    deny all;
+                } 
+                }
+</code></pre><h4 id="php-fpm设置"><a href="#php-fpm设置" class="headerlink" title="php-fpm设置"></a>php-fpm设置</h4><p>　　<code>nano  /etc/php/fpm-php5.6/php-fpm.conf</code><br>　　 <code>[global]</code><br>　　 <code>pid = run/php-fpm.pid</code><br>　　 <code>error_log = log/php-fpm.log</code><br>　　 <code>user = nginx</code><br>　　 <code>group = nginx</code><br>　　 <code>listen = /run/php-fpm.socket</code><br>　　 <code>listen.owner = nginx</code><br>　　 <code>listen.group = nginx</code><br>　　 <code>listen.mode = 0660</code><br>　　 <code>pm.max_children = 5</code><br>　　 <code>pm.start_servers = 3</code><br>　　 <strong><code>chdir =  /var/www/localhost/htdocs/dokuwiki</code></strong>
+　　 </p>
+<p>　　<code>nano  /etc/php/fpm-php5.6/php.ini</code><br>　　<code>date.timezone =&lt;Asia/Shanghai&gt;</code>
+　　</p>
+<h4 id="设置dokuwiki权限"><a href="#设置dokuwiki权限" class="headerlink" title="设置dokuwiki权限"></a>设置dokuwiki权限</h4><p>　　<code>chown -R nginx:nginx /var/www/localhost/htdocs/dokuwiki</code></p>
+<h4 id="启动nginx-php-fpm-服务"><a href="#启动nginx-php-fpm-服务" class="headerlink" title="启动nginx php-fpm 服务"></a>启动nginx php-fpm 服务</h4><p>　　<code>/etc/init.d/nginx start</code><br>　　<code>/etc/init.d/php-fpm start</code>
+　　</p>
+<h4 id="浏览器登入dokuwiki"><a href="#浏览器登入dokuwiki" class="headerlink" title="浏览器登入dokuwiki"></a>浏览器登入dokuwiki</h4><p>在地址栏输入你的ip+install.php<br>　　`eg: 192.168.1.108/install.php<br>　　<br>　　write by vastchen<br>　　                 2016.4.30
+　　　</p>
+<p>　　
+　　</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/raspberry-dokuwiki/" rel="tag"># raspberry,dokuwiki</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/03/Rashberry pi-gentoo安装云盘限定文件夹大小/" rel="next" title="Rashberry pi-gentoo安装云盘限定文件夹大小">
+                <i class="fa fa-chevron-left"></i> Rashberry pi-gentoo安装云盘限定文件夹大小
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/09/raspberry-pi-面密码登陆/" rel="prev" title="raspberry pi免密码登陆">
+                raspberry pi免密码登陆 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">vastchen</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装前配置"><span class="nav-number">1.</span> <span class="nav-text">安装前配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装后配置"><span class="nav-number">3.</span> <span class="nav-text">安装后配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#nginx-配置"><span class="nav-number">3.1.</span> <span class="nav-text">nginx 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#安装dokuwiki"><span class="nav-number">3.1.1.</span> <span class="nav-text">安装dokuwiki</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#php-fpm设置"><span class="nav-number">3.2.</span> <span class="nav-text">php-fpm设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置dokuwiki权限"><span class="nav-number">3.3.</span> <span class="nav-text">设置dokuwiki权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动nginx-php-fpm-服务"><span class="nav-number">3.4.</span> <span class="nav-text">启动nginx php-fpm 服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#浏览器登入dokuwiki"><span class="nav-number">3.5.</span> <span class="nav-text">浏览器登入dokuwiki</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">vastchen</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.3"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
