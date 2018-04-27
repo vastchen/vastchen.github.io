@@ -273,6 +273,261 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/27/orang_pi_zero_fan/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="vastchen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="起风了">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/27/orang_pi_zero_fan/" itemprop="url">orange pi zero gpio fan set</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-27T00:00:00+08:00">2018-04-27</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>#orange_pi_zero set fan</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>   终于下定决心购买orangepizero其实自已经有raspberry2,3了所以购买不购买orangpi其实是比较纠结的因为毕竟orange社区不如raspberry<br>的，主要还是怕国产硬件不过关。不过买回来一段时间还好各项运行都还算不错也没出什么问题，还安装上gentoo设置了风扇，现在就写篇文章记录下。</p>
+<h3 id="设置orange-pi-zero原理"><a href="#设置orange-pi-zero原理" class="headerlink" title="设置orange_pi_zero原理"></a>设置orange_pi_zero原理</h3><pre><code>orange_pi_zero通过gpio控制三级管达到一定温度就开让风扇转动。低于某温度就停止。推荐使用3.3v风扇，因为orangpi电源要求2A本身wifi
+</code></pre><p>也是要求3.3v，5v的风扇估计电压会不稳定。</p>
+<h4 id="orang-pi-zero-gpio针脚安装以及针脚图"><a href="#orang-pi-zero-gpio针脚安装以及针脚图" class="headerlink" title="orang_pi_zero gpio针脚安装以及针脚图"></a>orang_pi_zero gpio针脚安装以及针脚图</h4><p>-安装WiringOP<br><a href="https://github.com/zhaolei/WiringOP" target="_blank" rel="noopener">WiringOP</a></p>
+<figure class="highlight plain"><figcaption><span>gpio</span><a href="/usr/local/bin/```">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-查看针脚定义</span><br><span class="line"></span><br><span class="line">```gpio readall</span><br></pre></td></tr></table></figure>
+<p>-针脚图对应机器实际图形。<br><img src="/2018/04/27/orang_pi_zero_fan/opiz-pins-26-0.jpg" alt="logo"></p>
+<p>-S8050三级管示意图原理</p>
+<pre><code>三级管平的那面面向自己如下图，
+</code></pre><p><img src="/2018/04/27/orang_pi_zero_fan/sjg.png" alt="logo"></p>
+<p>发射级接地线，风扇红线接5V针脚，基极接GPIO7，集电极接风扇黑线。</p>
+<h3 id="Shell-脚本控制风扇"><a href="#Shell-脚本控制风扇" class="headerlink" title="Shell 脚本控制风扇"></a>Shell 脚本控制风扇</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">#Here i set my objective in deg celcius</span><br><span class="line">obj=44</span><br><span class="line"></span><br><span class="line">#date to log the fan state history</span><br><span class="line">time=$(date +%d\/%m\/%y\ %H\:%M)</span><br><span class="line"></span><br><span class="line">#putting my 2 cpu temperatures values in variables</span><br><span class="line">temp1=$(cat /sys/devices/virtual/thermal/thermal_zone1/temp)</span><br><span class="line">temp2=$(cat /sys/devices/virtual/thermal/thermal_zone0/temp)</span><br><span class="line">#do and average of the two temperatures</span><br><span class="line">temp=$((($temp1+$temp2)/2))</span><br><span class="line">echo $temp</span><br><span class="line">#set the pin 7 as an output</span><br><span class="line">/usr/local/bin/gpio mode 7 out</span><br><span class="line">#if greater or equal to the objective put the gpio state to 1</span><br><span class="line">if [ $temp -ge $obj ]; then</span><br><span class="line">/usr/local/bin/gpio mode 7 out</span><br><span class="line">/usr/local/bin/gpio write 7 1</span><br><span class="line">echo &quot;$time $temp fan 1&quot;&gt;&gt;/root/fan</span><br><span class="line"></span><br><span class="line">#if not greater or equal , then put the gpio7 state to 0</span><br><span class="line">else</span><br><span class="line">/usr/local/bin/gpio write 7 0</span><br><span class="line">echo &quot;$time $temp fan 0&quot;&gt;&gt;/root/fan</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h4 id="crontab-e"><a href="#crontab-e" class="headerlink" title="crontab -e"></a>crontab -e</h4><p><code>* * * * * /root/fan-control.sh</code></p>
+<p>参考<br>[shell脚本地址][<a href="http://www.d0wn.com/orange-pi-zero-the-battle-against-heat/" target="_blank" rel="noopener">http://www.d0wn.com/orange-pi-zero-the-battle-against-heat/</a>]</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/07/gentoo安装配置virtualbox/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="vastchen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="起风了">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/07/gentoo安装配置virtualbox/" itemprop="url">gentoo下安装配置virtualbox</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-07T00:00:00+08:00">2018-02-07</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <pre><code>由于折腾了linux很多年了其实使用gentoo也有一定的年限了，一直没有什么产出，现在打算出个教材试下．
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/23/emacs-python-markdown支持/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1361,7 +1616,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1392,7 +1647,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
