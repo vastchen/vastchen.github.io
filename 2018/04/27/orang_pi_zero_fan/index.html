@@ -103,20 +103,20 @@
   <meta name="keywords" content="orange_pi,gpio," />
 
 
-<meta name="description" content="#orange_pi_zero set fan 简介   终于下定决心购买orangepizero其实自已经有raspberry2,3了所以购买不购买orangpi其实是比较纠结的因为毕竟orange社区不如raspberry的，主要还是怕国产硬件不过关。不过买回来一段时间还好各项运行都还算不错也没出什么问题，还安装上gentoo设置了风扇，现在就写篇文章记录下。 设置orange_pi_zero">
+<meta name="description" content="简介   终于下定决心购买orangepizero其实自已经有raspberry2,3了所以购买不购买orangpi其实是比较纠结的因为毕竟orange社区不如raspberry的，主要还是怕国产硬件不过关。不过买回来一段时间还好各项运行都还算不错也没出什么问题，还安装上gentoo设置了风扇，现在就写篇文章记录下。 设置orange_pi_zero原理   orange_pi_zero通过gpi">
 <meta name="keywords" content="orange_pi,gpio">
 <meta property="og:type" content="article">
 <meta property="og:title" content="orange pi zero gpio fan set">
 <meta property="og:url" content="http://yoursite.com/2018/04/27/orang_pi_zero_fan/index.html">
 <meta property="og:site_name" content="起风了">
-<meta property="og:description" content="#orange_pi_zero set fan 简介   终于下定决心购买orangepizero其实自已经有raspberry2,3了所以购买不购买orangpi其实是比较纠结的因为毕竟orange社区不如raspberry的，主要还是怕国产硬件不过关。不过买回来一段时间还好各项运行都还算不错也没出什么问题，还安装上gentoo设置了风扇，现在就写篇文章记录下。 设置orange_pi_zero">
+<meta property="og:description" content="简介   终于下定决心购买orangepizero其实自已经有raspberry2,3了所以购买不购买orangpi其实是比较纠结的因为毕竟orange社区不如raspberry的，主要还是怕国产硬件不过关。不过买回来一段时间还好各项运行都还算不错也没出什么问题，还安装上gentoo设置了风扇，现在就写篇文章记录下。 设置orange_pi_zero原理   orange_pi_zero通过gpi">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/04/27/orang_pi_zero_fan/opiz-pins-26-0.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/04/27/orang_pi_zero_fan/sjg.png">
-<meta property="og:updated_time" content="2018-04-27T11:59:10.586Z">
+<meta property="og:updated_time" content="2018-04-27T12:05:13.246Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="orange pi zero gpio fan set">
-<meta name="twitter:description" content="#orange_pi_zero set fan 简介   终于下定决心购买orangepizero其实自已经有raspberry2,3了所以购买不购买orangpi其实是比较纠结的因为毕竟orange社区不如raspberry的，主要还是怕国产硬件不过关。不过买回来一段时间还好各项运行都还算不错也没出什么问题，还安装上gentoo设置了风扇，现在就写篇文章记录下。 设置orange_pi_zero">
+<meta name="twitter:description" content="简介   终于下定决心购买orangepizero其实自已经有raspberry2,3了所以购买不购买orangpi其实是比较纠结的因为毕竟orange社区不如raspberry的，主要还是怕国产硬件不过关。不过买回来一段时间还好各项运行都还算不错也没出什么问题，还安装上gentoo设置了风扇，现在就写篇文章记录下。 设置orange_pi_zero原理   orange_pi_zero通过gpi">
 <meta name="twitter:image" content="http://yoursite.com/2018/04/27/orang_pi_zero_fan/opiz-pins-26-0.jpg">
 
 
@@ -346,8 +346,7 @@
       
 
       
-        <p>#orange_pi_zero set fan</p>
-<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>   终于下定决心购买orangepizero其实自已经有raspberry2,3了所以购买不购买orangpi其实是比较纠结的因为毕竟orange社区不如raspberry<br>的，主要还是怕国产硬件不过关。不过买回来一段时间还好各项运行都还算不错也没出什么问题，还安装上gentoo设置了风扇，现在就写篇文章记录下。</p>
+        <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>   终于下定决心购买orangepizero其实自已经有raspberry2,3了所以购买不购买orangpi其实是比较纠结的因为毕竟orange社区不如raspberry<br>的，主要还是怕国产硬件不过关。不过买回来一段时间还好各项运行都还算不错也没出什么问题，还安装上gentoo设置了风扇，现在就写篇文章记录下。</p>
 <h3 id="设置orange-pi-zero原理"><a href="#设置orange-pi-zero原理" class="headerlink" title="设置orange_pi_zero原理"></a>设置orange_pi_zero原理</h3><p>   orange_pi_zero通过gpio控制三级管达到一定温度就开让风扇转动。低于某温度就停止。推荐使用3.3v风扇，因为orangpi电源要求2A本身wifi<br>也是要求3.3v，5v的风扇估计电压会不稳定。</p>
 <h4 id="orang-pi-zero-gpio针脚安装以及针脚图"><a href="#orang-pi-zero-gpio针脚安装以及针脚图" class="headerlink" title="orang_pi_zero gpio针脚安装以及针脚图"></a>orang_pi_zero gpio针脚安装以及针脚图</h4><p>-安装WiringOP<br><a href="https://github.com/zhaolei/WiringOP" target="_blank" rel="noopener">WiringOP</a></p>
 <figure class="highlight plain"><figcaption><span>gpio</span><a href="/usr/local/bin/```">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-查看针脚定义</span><br><span class="line"></span><br><span class="line">```gpio readall</span><br></pre></td></tr></table></figure>
